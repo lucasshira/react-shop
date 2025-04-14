@@ -8,31 +8,34 @@
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
   transition: right 0.3s ease-in-out;
   z-index: 1001;
+
+  header {
+    border-bottom: 1px solid #ccc;
+  }
   
   .closeBtn {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    top: 0.4rem;
+    right: 0.4rem;
     background: none;
     border: none;
     cursor: pointer;
   }
   
-  .h1 {
+  h1 {
     font-size: 2rem;
     margin-bottom: 1rem;
-    color: black;
   }
 
   .cartList {
     list-style: none;
     padding: 0;
     margin: 0;
-    max-height: calc(100vh - 80px);
+    max-height: calc(100vh - 70px);
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
+    gap: 0rem;
 
     .itemDetails {
       border: 1px solid #ccc;

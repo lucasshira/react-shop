@@ -19,12 +19,13 @@ export default function CartDrawer({ close }: CartDrawerProps) {
 
   return (
     <>
-      {/* Overlay to darken the background when the drawer is open */}
       <div className={styles.overlay} onClick={close}></div>
 
       <div className={styles.drawer}>
-        <button className={styles.closeBtn} onClick={close}>x</button>
-        <h2>Shopping cart</h2>
+        <header>
+          <button className={styles.closeBtn} onClick={close}>x</button>
+          <h2>Your cart</h2>
+        </header>
         {cartItems.length === 0 ? (
           <p>Empty car!</p>
         ) : (
