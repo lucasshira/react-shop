@@ -61,7 +61,7 @@
     align-items: center;
     justify-items: center;
     gap: 1rem;
-    border-radius: 0.5rem;
+    border-radius: 1rem;
     padding: 0.5rem 1rem;
     background-color: #f0f0f0;
     width: 400px;
@@ -102,11 +102,10 @@
       transform-origin: bottom right;
       transition: transform 0.2s ease-in-out;
     }
+  }
 
-
-    &:hover::after {
-      transform: scaleX(1);
-      transform-origin: bottom left;
-    }
+  :not(h1) > a:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
   }
 }
