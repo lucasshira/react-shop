@@ -1,7 +1,12 @@
-import styles from "./Shop.module.scss"
+import { useNavigate } from "react-router";
+import { useEffect, useState } from "react";
+
 import api from "../utils/api";
 
-interface Product {
+import styles from "./Shop.module.scss"
+import { Star } from "lucide-react";
+
+export interface Product {
   id: number;
   title: string;
   price: number;
@@ -14,15 +19,34 @@ interface Product {
   };
 }
 
-const products: Product[] = await api.get('/products').then((response) => response.data);
-
-// response.map((response: any) => {
-//   console.log(response.category)
-// })
-
-const categories = Array.from(new Set(products.map((product: Product) => product.category)))
-
 export default function Shop() {
+  const navigate = useNavigate()
+  const [products, setProducts] = useState<Product[]>([])
+  const [categories, setCategories] = useState<string[]>([])
+
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const response = await api.get('/products')
+        setProducts(response.data)
+
+        const uniqueCategories: string[] = Array.from(
+          new Set(response.data.map((p: Product) => p.category))
+        )
+
+        setCategories(uniqueCategories)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    fetchProducts()
+  }, [])
+
+  const handleProductClick = (productId: number) => {
+    navigate(`/shop/${productId}`)
+  }
+
   return (
     <>
       <header>
@@ -48,12 +72,12 @@ export default function Shop() {
         <h2>All</h2>
         {products.map((product) => (
           <div key={product.id} className={styles.product}>
-            <img src={product.image} alt={product.title} className={styles.productImage} />
+            <img src={product.image} alt={product.title} className={styles.productImage} onClick={() => handleProductClick(product.id)} />
             <h3>{product.title}</h3>
-            {/* <p>{product.description}</p>
-            <p>Price: ${product.price}</p>
-            <p>Rating: {product.rating.rate} ({product.rating.count})</p>
-            <button>Add to Cart</button> */}
+            <span>
+              <Star size={13} />
+              {product.rating.rate} ({product.rating.count})</span>
+            <span>€ {product.price}</span>
           </div>
         ))}
       </section>

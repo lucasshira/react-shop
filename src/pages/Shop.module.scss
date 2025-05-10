@@ -52,13 +52,14 @@ header {
 
     .product {
       display: flex;
-      gap: 2rem;
-      padding: 1rem;
-      justify-content: center;
+      gap: 0.5rem;
       flex-direction: column;
+      height: 350px;
 
       h3 {
-        font-size: 1rem;
+        display: block;
+        height: 45px;
+        font-size: 0.8rem;
         margin: 0;
       }
 
@@ -66,13 +67,20 @@ header {
         padding: 3rem;
         border: 1px solid #ccc;
         background-color: white;
-        width: 100px;
-        height: 100px;
+        width: 140px;
+        height: 140px;
         border-radius: 14px;
         display: flex;
         justify-content: center;
         align-items: center;
         font-size: 2rem;
+        cursor: pointer;
+      }
+
+      span {
+        display: flex;
+        align-items: center;
+        gap: 0.2rem;
       }
     }
   }
