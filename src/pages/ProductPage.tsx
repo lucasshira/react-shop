@@ -35,18 +35,20 @@ export default function ProductPage() {
       </header>
     
       <div className={styles.container}>
-        <div>
-          <img src={product.image} height={160} width={160} alt={product.title} />
+        <img src={product.image} alt={product.title} />
+        
+        <div className={styles.productInfo}>
           <h1>{product.title}</h1>
           <p>{product.description}</p>
           <span>
             <Star size={16} />
-            {product.rating.rate} ({product.rating.count})</span>
-          <span>€ {product.price}</span>
+            {product.rating.rate} ({product.rating.count})
+          </span>
+          <strong>€ {product.price}</strong>
 
           {["men's clothing", "women's clothing"].includes(product.category) && (
-            <div>
-              <p>Choose size</p>
+            <div className={styles.productSize}>
+              <p>Choose Size</p>
               <button>Small</button>
               <button>Medium</button>
               <button>Large</button>
@@ -54,11 +56,13 @@ export default function ProductPage() {
             </div>
           )}
 
-          <div>
-            <div>
-              <span>- 1 +</span>
+          <div className={styles.productActionArea}>
+            <div className={styles.productQuantity}>
+              <button>-</button>
+              <span>1</span>
+              <button>+</button>
             </div>
-            <button>Add to Cart</button>
+            <button className={styles.productPurchaseButton}>Add to Cart</button>
           </div>
         </div>
       </div>
