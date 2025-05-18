@@ -30,10 +30,12 @@
 
   strong {
     font-size: 2rem;
+    margin-bottom: 2rem;
   }
 
   .productSize {
-    margin: 2rem 0;
+    margin-top: 0;
+    margin-bottom: 2rem;
     border-top: 1px solid #ccc;
 
     p {
@@ -47,6 +49,11 @@
       border: 0;
       border-radius: 32px;
       cursor: pointer;
+      transition: all 100ms;
+
+      &:hover {
+        background-color: gray;
+      }
     }
   }
 
@@ -56,30 +63,30 @@
     border-top: 1px solid #ccc;
     padding: 2rem 0;
 
-  .productQuantity {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 1.5rem;
-    gap: 1rem;
-    padding: 0.8rem 3rem;
-    border-radius: 32px;
-    background-color: #f0f0f0;
-    font-weight: bold;
-
-    span {
-      text-align: center;
-      flex: 1;
-    }
-
-    button {
-      border: 0;
+    .productQuantity {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       font-size: 1.5rem;
+      gap: 1rem;
+      padding: 0.8rem 3rem;
+      border-radius: 32px;
+      background-color: #f0f0f0;
       font-weight: bold;
-      cursor: pointer;
-      width: 32px
+
+      span {
+        text-align: center;
+        flex: 1;
+      }
+
+      button {
+        border: 0;
+        font-size: 1.5rem;
+        font-weight: bold;
+        cursor: pointer;
+        width: 32px
+      }
     }
-  }
 
     .productPurchaseButton {
       background-color: #000;

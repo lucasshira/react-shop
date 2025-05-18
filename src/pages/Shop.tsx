@@ -5,6 +5,7 @@ import api from "../utils/api";
 
 import styles from "./Shop.module.scss"
 import { Star } from "lucide-react";
+import Breadcrumb from "../components/Breadcrumb";
 
 export interface Product {
   id: number;
@@ -49,39 +50,36 @@ export default function Shop() {
 
   return (
     <>
-      <header>
-        Home - Shop
-      </header>
-
-    <div className={styles.container}>
-      <nav>
-        <h2>Filters</h2>
-        <div>
-          <ul>
-            {categories.map((category) => (
-              <li key={category}>
-                <input type="checkbox" id={category} name={category} value={category} />
-                <label htmlFor={category}>{category}</label>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </nav>
-
-      <section>
-        <h2>All</h2>
-        {products.map((product) => (
-          <div key={product.id} className={styles.product}>
-            <img src={product.image} alt={product.title} className={styles.productImage} onClick={() => handleProductClick(product.id)} />
-            <h3>{product.title}</h3>
-            <span>
-              <Star size={13} />
-              {product.rating.rate} ({product.rating.count})</span>
-            <span>€ {product.price}</span>
+      <Breadcrumb isShopMainPage />
+      <div className={styles.container}>
+        <nav>
+          <h2>Filters</h2>
+          <div>
+            <ul>
+              {categories.map((category) => (
+                <li key={category}>
+                  <input type="checkbox" id={category} name={category} value={category} />
+                  <label htmlFor={category}>{category}</label>
+                </li>
+              ))}
+            </ul>
           </div>
-        ))}
-      </section>
-    </div>
+        </nav>
+
+        <section>
+          <h2>All</h2>
+          {products.map((product) => (
+            <div key={product.id} className={styles.product}>
+              <img src={product.image} alt={product.title} className={styles.productImage} onClick={() => handleProductClick(product.id)} />
+              <h3>{product.title}</h3>
+              <span>
+                <Star size={13} />
+                {product.rating.rate} ({product.rating.count})</span>
+              <span>€ {product.price}</span>
+            </div>
+          ))}
+        </section>
+      </div>
     </>
   )
 }
