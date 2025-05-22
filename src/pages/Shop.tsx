@@ -99,19 +99,31 @@ export default function Shop() {
           </div>
         </nav>
 
-        <section>
-          <h2>{selectedCategory ? selectedCategory : 'All'}</h2>
-          {products.map((product) => (
-            <div key={product.id} className={styles.product}>
-              <img src={product.image} alt={product.title} className={styles.productImage} onClick={() => handleProductClick(product.id)} />
-              <h3>{product.title}</h3>
-              <span>
-                <Star size={13} />
-                {product.rating.rate} ({product.rating.count})</span>
-              <span>€ {product.price}</span>
-            </div>
-          ))}
-        </section>
+        <div>
+          {products.length === 0 ? (
+            <p style={{ fontSize: '1.5rem' }}>Nenhum produto encontrado para <strong>"{searchQuery}"</strong>.</p>
+          ) : (
+            <section>
+              <h2>{selectedCategory ? selectedCategory : 'All'}</h2>
+              {products.map((product) => (
+                <div key={product.id} className={styles.product}>
+                  <img
+                    src={product.image}
+                    alt={product.title}
+                    className={styles.productImage}
+                    onClick={() => handleProductClick(product.id)}
+                  />
+                  <h3>{product.title}</h3>
+                  <span>
+                    <Star size={13} />
+                    {product.rating.rate} ({product.rating.count})
+                  </span>
+                  <span>€ {product.price}</span>
+                </div>
+              ))}
+            </section>
+          )}
+        </div>
       </div>
     </>
   )
