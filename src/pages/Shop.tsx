@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import { useEffect, useState } from "react";
 
 import api from "../utils/api";
@@ -28,6 +28,9 @@ export default function Shop() {
   const [categories, setCategories] = useState<string[]>([])
   const [selectedCategory, setSelectedCategory] = useState<string>("")
 
+  const [searchParams] = useSearchParams()
+  const searchQuery = searchParams.get("search")?.toLowerCase() || "";
+
   useEffect(() => {
     async function fetchProducts() {
       try {
@@ -48,13 +51,20 @@ export default function Shop() {
   }, [])
 
   useEffect(() => {
+    let filtered = [...allProducts]
+
     if (selectedCategory) {
-      const filteredProducts = allProducts.filter((product) => product.category === selectedCategory)
-      setProducts(filteredProducts)
-    } else {
-      setProducts(allProducts)
+      filtered = filtered.filter((product) => product.category === selectedCategory)
     }
-  }, [selectedCategory, allProducts])
+
+    if (searchQuery) {
+      filtered = filtered.filter((product) =>
+      product.title.toLowerCase().includes(searchQuery)
+    );
+  }
+  
+    setProducts(filtered);
+  }, [selectedCategory, allProducts, searchQuery])
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategory((prevCategory) => (prevCategory === category ? "" : category))

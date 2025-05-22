@@ -4,11 +4,22 @@ import styles from './Header.module.scss'
 import { useToggle } from '../hooks/useToggle'
 import CartDrawer from './CartDrawer'
 import { Link, useNavigate } from 'react-router'
+import { useState } from 'react'
 
 export default function Header() {
+  const navigate = useNavigate()
+
   const { value: isOpen, toggle, setFalse } = useToggle({ initialValue: false })
 
-  const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState<string>("")
+
+  const handleSearch = () => {
+    if (searchTerm.trim() !== "") {
+      navigate(`/shop?search=${encodeURIComponent(searchTerm)}`);
+    } else {
+      navigate('/shop');
+    }
+  }
 
   return (
     <div className={styles.header}>
@@ -22,12 +33,20 @@ export default function Header() {
             <li><a href="/about">About</a></li>
           </div>
           
-          <div className={styles.searchBar}>
+          <form 
+            className={styles.searchBar}
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSearch();
+            }}>
             <button>
-              <SearchIcon size={16} />
+              <SearchIcon size={16} onClick={handleSearch} />
             </button>
-            <input type="text" placeholder="Search for products..." />
-          </div>
+            <input 
+              type="text" 
+              placeholder="Search for products..." 
+              onChange={(e) => setSearchTerm(e.target.value)} />
+          </form>
 
           <div className={styles.navIcons}>
             <li>
