@@ -22,14 +22,17 @@ export interface Product {
 
 export default function Shop() {
   const navigate = useNavigate()
+
   const [products, setProducts] = useState<Product[]>([])
+  const [allProducts, setAllProducts] = useState<Product[]>([])
   const [categories, setCategories] = useState<string[]>([])
+  const [selectedCategory, setSelectedCategory] = useState<string>("")
 
   useEffect(() => {
     async function fetchProducts() {
       try {
         const response = await api.get('/products')
-        setProducts(response.data)
+        setAllProducts(response.data)
 
         const uniqueCategories: string[] = Array.from(
           new Set(response.data.map((p: Product) => p.category))
@@ -44,6 +47,19 @@ export default function Shop() {
     fetchProducts()
   }, [])
 
+  useEffect(() => {
+    if (selectedCategory) {
+      const filteredProducts = allProducts.filter((product) => product.category === selectedCategory)
+      setProducts(filteredProducts)
+    } else {
+      setProducts(allProducts)
+    }
+  }, [selectedCategory, allProducts])
+
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory((prevCategory) => (prevCategory === category ? "" : category))
+  }
+  
   const handleProductClick = (productId: number) => {
     navigate(`/shop/${productId}`)
   }
@@ -58,7 +74,14 @@ export default function Shop() {
             <ul>
               {categories.map((category) => (
                 <li key={category}>
-                  <input type="checkbox" id={category} name={category} value={category} />
+                  <input 
+                    type="checkbox" 
+                    id={category} 
+                    name={category} 
+                    value={category} 
+                    checked={selectedCategory === category} 
+                    onChange={() => handleCategoryChange(category)}  
+                  />
                   <label htmlFor={category}>{category}</label>
                 </li>
               ))}
@@ -67,7 +90,7 @@ export default function Shop() {
         </nav>
 
         <section>
-          <h2>All</h2>
+          <h2>{selectedCategory ? selectedCategory : 'All'}</h2>
           {products.map((product) => (
             <div key={product.id} className={styles.product}>
               <img src={product.image} alt={product.title} className={styles.productImage} onClick={() => handleProductClick(product.id)} />
